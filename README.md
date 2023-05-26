@@ -11,4 +11,4 @@ To run the code and generate the graph yourself, follow these steps:
 
 1. Install the required libraries: `pip install pandas pyvis`
 2. Replace `your_data.csv` with the path to your own CSV file.
-3. Run the script and open the `graph.html` file in a web browser.
+3. Run the script and open the `aws-config-800-53-mapping.html` file in a web browser.
