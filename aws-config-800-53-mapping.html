@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 1000px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "AC-2(1)", "label": "AC-2(1)", "shape": "dot"}, {"color": "#97c2fc", "id": "iam-user-group-membership-check", "label": "iam-user-group-membership-check", "shape": "dot"}, {"color": "#97c2fc", "id": "AC-2(j)", "label": "AC-2(j)", "shape": "dot"}, {"color": "#97c2fc", "id": "AC-3", "label": "AC-3", "shape": "dot"}, {"color": "#97c2fc", "id": "AC-6", "label": "AC-6", "shape": "dot"}, {"color": "#97c2fc", "id": "AC-17(1)", "label": "AC-17(1)", "shape": "dot"}, {"color": "#97c2fc", "id": "securityhub-enabled", "label": "securityhub-enabled", "shape": "dot"}, {"color": "#97c2fc", "id": "AC-2(12)(a)", "label": "AC-2(12)(a)", "shape": "dot"}, {"color": "#97c2fc", "id": "AC-2(4)", "label": "AC-2(4)", "shape": "dot"}, {"color": "#97c2fc", "id": "AC-2(g)", "label": "AC-2(g)", "shape": "dot"}, {"color": "#97c2fc", "id": "AU-6(1)(3)", "label": "AU-6(1)(3)", "shape": "dot"}, {"color": "#97c2fc", "id": "CA-7(a)(b)", "label": "CA-7(a)(b)", "shape": "dot"}, {"color": "#97c2fc", "id": "SA-10", "label": "SA-10", "shape": "dot"}, {"color": "#97c2fc", "id": "SI-4(16)", "label": "SI-4(16)", "shape": "dot"}, {"color": "#97c2fc", "id": "SI-4(2)", "label": "SI-4(2)", "shape": "dot"}, {"color": "#97c2fc", "id": "SI-4(4)", "label": "SI-4(4)", "shape": "dot"}, {"color": "#97c2fc", "id": "SI-4(5)", "label": "SI-4(5)", "shape": "dot"}, {"color": "#97c2fc", "id": "SI-4(a)(b)(c)", "label": "SI-4(a)(b)(c)", "shape": "dot"}, {"color": "#97c2fc", "id": "cloudtrail-enabled", "label": "cloudtrail-enabled", "shape": "dot"}, {"color": "#97c2fc", "id": "AU-12(a)(c) ", "label": "AU-12(a)(c) ", "shape": "dot"}, {"color": "#97c2fc", "id": "AU-2(a)(d)", "label": "AU-2(a)(d)", "shape": "dot"}, {"color": "#97c2fc", "id": "AU-3", "label": "AU-3", "shape": "dot"}, {"color": "#97c2fc", "id": "rds-logging-enabled", "label": "rds-logging-enabled", "shape": "dot"}, {"color": "#97c2fc", "id": "AU-12(a)(c)", "label": "AU-12(a)(c)", "shape": "dot"}, {"color": "#97c2fc", "id": "cloudwatch-alarm-action-check", "label": "cloudwatch-alarm-action-check", "shape": "dot"}, {"color": "#97c2fc", "id": "AU-7(1)", "label": "AU-7(1)", "shape": "dot"}, {"color": "#97c2fc", "id": "IR-4(1)", "label": "IR-4(1)", "shape": "dot"}, {"color": "#97c2fc", "id": "redshift-cluster-configuration-check", "label": "redshift-cluster-configuration-check", "shape": "dot"}, {"color": "#97c2fc", "id": "AU-12(a)(c )", "label": "AU-12(a)(c )", "shape": "dot"}, {"color": "#97c2fc", "id": "SC-13", "label": "SC-13", "shape": "dot"}, {"color": "#97c2fc", "id": "SC-28", "label": "SC-28", "shape": "dot"}, {"color": "#97c2fc", "id": "cloudtrail-s3-dataevents-enabled", "label": "cloudtrail-s3-dataevents-enabled", "shape": "dot"}, {"color": "#97c2fc", "id": "emr-kerberos-enabled", "label": "emr-kerberos-enabled", "shape": "dot"}, {"color": "#97c2fc", "id": "AC-5c", "label": "AC-5c", "shape": "dot"}, {"color": "#97c2fc", "id": "iam-group-has-users-check", "label": "iam-group-has-users-check", "shape": "dot"}, {"color": "#97c2fc", "id": "SC-2", "label": "SC-2", "shape": "dot"}, {"color": "#97c2fc", "id": "s3-bucket-policy-grantee-check", "label": "s3-bucket-policy-grantee-check", "shape": "dot"}, {"color": "#97c2fc", "id": "SC-7", "label": "SC-7", "shape": "dot"}, {"color": "#97c2fc", "id": "SC-7(3)", "label": "SC-7(3)", "shape": "dot"}, {"color": "#97c2fc", "id": "AC-4", "label": "AC-4", "shape": "dot"}, {"color": "#97c2fc", "id": "lambda-inside-vpc", "label": "lambda-inside-vpc", "shape": "dot"}, {"color": "#97c2fc", "id": "ec2-instances-in-vpc", "label": "ec2-instances-in-vpc", "shape": "dot"}, {"color": "#97c2fc", "id": "vpc-sg-open-only-to-authorized-ports", "label": "vpc-sg-open-only-to-authorized-ports", "shape": "dot"}, {"color": "#97c2fc", "id": "AC-21(b)", "label": "AC-21(b)", "shape": "dot"}, {"color": "#97c2fc", "id": "ec2-instance-no-public-ip", "label": "ec2-instance-no-public-ip", "shape": "dot"}, {"color": "#97c2fc", "id": "elasticsearch-in-vpc-only", "label": "elasticsearch-in-vpc-only", "shape": "dot"}, {"color": "#97c2fc", "id": "AC-17(3)", "label": "AC-17(3)", "shape": "dot"}, {"color": "#97c2fc", "id": "internet-gateway-authorized-vpc-only", "label": "internet-gateway-authorized-vpc-only", "shape": "dot"}, {"color": "#97c2fc", "id": "iam-no-inline-policy-check", "label": "iam-no-inline-policy-check", "shape": "dot"}, {"color": "#97c2fc", "id": "AC-17(2)", "label": "AC-17(2)", "shape": "dot"}, {"color": "#97c2fc", "id": "elb-acm-certificate-required", "label": "elb-acm-certificate-required", "shape": "dot"}, {"color": "#97c2fc", "id": "SC-8", "label": "SC-8", "shape": "dot"}, {"color": "#97c2fc", "id": "SC-8(1)", "label": "SC-8(1)", "shape": "dot"}, {"color": "#97c2fc", "id": "alb-http-drop-invalid-header-enabled", "label": "alb-http-drop-invalid-header-enabled", "shape": "dot"}, {"color": "#97c2fc", "id": "SC-23", "label": "SC-23", "shape": "dot"}, {"color": "#97c2fc", "id": "elb-tls-https-listeners-only", "label": "elb-tls-https-listeners-only", "shape": "dot"}, {"color": "#97c2fc", "id": "api-gw-execution-logging-enabled", "label": "api-gw-execution-logging-enabled", "shape": "dot"}, {"color": "#97c2fc", "id": "AU-9", "label": "AU-9", "shape": "dot"}, {"color": "#97c2fc", "id": "cloudwatch-log-group-encrypted", "label": "cloudwatch-log-group-encrypted", "shape": "dot"}, {"color": "#97c2fc", "id": "AU-9(2)", "label": "AU-9(2)", "shape": "dot"}, {"color": "#97c2fc", "id": "s3-bucket-replication-enabled", "label": "s3-bucket-replication-enabled", "shape": "dot"}, {"color": "#97c2fc", "id": "CP-10", "label": "CP-10", "shape": "dot"}, {"color": "#97c2fc", "id": "CP-9(b)", "label": "CP-9(b)", "shape": "dot"}, {"color": "#97c2fc", "id": "SC-36", "label": "SC-36", "shape": "dot"}, {"color": "#97c2fc", "id": "SC-5", "label": "SC-5", "shape": "dot"}, {"color": "#97c2fc", "id": "AU-11", "label": "AU-11", "shape": "dot"}, {"color": "#97c2fc", "id": "cw-loggroup-retention-period-check", "label": "cw-loggroup-retention-period-check", "shape": "dot"}, {"color": "#97c2fc", "id": "SI-12", "label": "SI-12", "shape": "dot"}, {"color": "#97c2fc", "id": "ec2-instance-detailed-monitoring-enabled", "label": "ec2-instance-detailed-monitoring-enabled", "shape": "dot"}, {"color": "#97c2fc", "id": "SI-4(a)(b)(c", "label": "SI-4(a)(b)(c", "shape": "dot"}, {"color": "#97c2fc", "id": "CM-2", "label": "CM-2", "shape": "dot"}, {"color": "#97c2fc", "id": "ec2-volume-inuse-check", "label": "ec2-volume-inuse-check", "shape": "dot"}, {"color": "#97c2fc", "id": "SC-4", "label": "SC-4", "shape": "dot"}, {"color": "#97c2fc", "id": "elb-deletion-protection-enabled", "label": "elb-deletion-protection-enabled", "shape": "dot"}, {"color": "#97c2fc", "id": "cloudtrail-security-trail-enabled", "label": "cloudtrail-security-trail-enabled", "shape": "dot"}, {"color": "#97c2fc", "id": "elasticache-redis-cluster-automatic-backup-check", "label": "elasticache-redis-cluster-automatic-backup-check", "shape": "dot"}, {"color": "#97c2fc", "id": "s3-bucket-versioning-enabled", "label": "s3-bucket-versioning-enabled", "shape": "dot"}, {"color": "#97c2fc", "id": "vpc-vpn-2-tunnels-up", "label": "vpc-vpn-2-tunnels-up", "shape": "dot"}, {"color": "#97c2fc", "id": "elb-cross-zone-load-balancing-enabled", "label": "elb-cross-zone-load-balancing-enabled", "shape": "dot"}, {"color": "#97c2fc", "id": "IA-2(1)(2)(11)", "label": "IA-2(1)(2)(11)", "shape": "dot"}, {"color": "#97c2fc", "id": "iam-user-mfa-enabled", "label": "iam-user-mfa-enabled", "shape": "dot"}, {"color": "#97c2fc", "id": "guardduty-non-archived-findings", "label": "guardduty-non-archived-findings", "shape": "dot"}, {"color": "#97c2fc", "id": "IR-6(1)", "label": "IR-6(1)", "shape": "dot"}, {"color": "#97c2fc", "id": "IR-7(1)", "label": "IR-7(1)", "shape": "dot"}, {"color": "#97c2fc", "id": "RA-5", "label": "RA-5", "shape": "dot"}, {"color": "#97c2fc", "id": "elasticsearch-node-to-node-encryption-check", "label": "elasticsearch-node-to-node-encryption-check", "shape": "dot"}, {"color": "#97c2fc", "id": "SC-12", "label": "SC-12", "shape": "dot"}, {"color": "#97c2fc", "id": "kms-cmk-not-scheduled-for-deletion", "label": "kms-cmk-not-scheduled-for-deletion", "shape": "dot"}, {"color": "#97c2fc", "id": "api-gw-cache-enabled-and-encrypted", "label": "api-gw-cache-enabled-and-encrypted", "shape": "dot"}, {"color": "#97c2fc", "id": "sagemaker-endpoint-configuration-kms-key-configured", "label": "sagemaker-endpoint-configuration-kms-key-configured", "shape": "dot"}, {"color": "#97c2fc", "id": "sagemaker-notebook-instance-kms-key-configured", "label": "sagemaker-notebook-instance-kms-key-configured", "shape": "dot"}, {"color": "#97c2fc", "id": "dynamodb-table-encrypted-kms", "label": "dynamodb-table-encrypted-kms", "shape": "dot"}, {"color": "#97c2fc", "id": "s3-bucket-default-lock-enabled", "label": "s3-bucket-default-lock-enabled", "shape": "dot"}]);
+                  edges = new vis.DataSet([{"from": "AC-2(1)", "to": "iam-user-group-membership-check"}, {"from": "AC-2(j)", "to": "iam-user-group-membership-check"}, {"from": "AC-3", "to": "iam-user-group-membership-check"}, {"from": "AC-6", "to": "iam-user-group-membership-check"}, {"from": "AC-17(1)", "to": "securityhub-enabled"}, {"from": "AC-2(1)", "to": "securityhub-enabled"}, {"from": "AC-2(12)(a)", "to": "securityhub-enabled"}, {"from": "AC-2(4)", "to": "securityhub-enabled"}, {"from": "AC-2(g)", "to": "securityhub-enabled"}, {"from": "AU-6(1)(3)", "to": "securityhub-enabled"}, {"from": "CA-7(a)(b)", "to": "securityhub-enabled"}, {"from": "SA-10", "to": "securityhub-enabled"}, {"from": "SI-4(16)", "to": "securityhub-enabled"}, {"from": "SI-4(2)", "to": "securityhub-enabled"}, {"from": "SI-4(4)", "to": "securityhub-enabled"}, {"from": "SI-4(5)", "to": "securityhub-enabled"}, {"from": "SI-4(a)(b)(c)", "to": "securityhub-enabled"}, {"from": "AC-2(4)", "to": "cloudtrail-enabled"}, {"from": "AC-2(g)", "to": "cloudtrail-enabled"}, {"from": "AU-12(a)(c) ", "to": "cloudtrail-enabled"}, {"from": "AU-2(a)(d)", "to": "cloudtrail-enabled"}, {"from": "AU-3", "to": "cloudtrail-enabled"}, {"from": "AC-2(4)", "to": "rds-logging-enabled"}, {"from": "AC-2(g)", "to": "rds-logging-enabled"}, {"from": "AU-12(a)(c)", "to": "rds-logging-enabled"}, {"from": "AU-2(a)(d)", "to": "rds-logging-enabled"}, {"from": "AU-3", "to": "rds-logging-enabled"}, {"from": "AC-2(4)", "to": "cloudwatch-alarm-action-check"}, {"from": "AU-6(1)(3)", "to": "cloudwatch-alarm-action-check"}, {"from": "AU-7(1)", "to": "cloudwatch-alarm-action-check"}, {"from": "CA-7(a)(b)", "to": "cloudwatch-alarm-action-check"}, {"from": "IR-4(1)", "to": "cloudwatch-alarm-action-check"}, {"from": "SI-4(2)", "to": "cloudwatch-alarm-action-check"}, {"from": "SI-4(4)", "to": "cloudwatch-alarm-action-check"}, {"from": "SI-4(5)", "to": "cloudwatch-alarm-action-check"}, {"from": "SI-4(a)(b)(c)", "to": "cloudwatch-alarm-action-check"}, {"from": "AC-2(4)", "to": "redshift-cluster-configuration-check"}, {"from": "AC-2(g)", "to": "redshift-cluster-configuration-check"}, {"from": "AU-12(a)(c )", "to": "redshift-cluster-configuration-check"}, {"from": "AU-2(a)(d)", "to": "redshift-cluster-configuration-check"}, {"from": "AU-3", "to": "redshift-cluster-configuration-check"}, {"from": "SC-13", "to": "redshift-cluster-configuration-check"}, {"from": "SC-28", "to": "redshift-cluster-configuration-check"}, {"from": "AC-2(g)", "to": "cloudtrail-s3-dataevents-enabled"}, {"from": "AU-12(a)(c)", "to": "cloudtrail-s3-dataevents-enabled"}, {"from": "AU-2(a)(d)", "to": "cloudtrail-s3-dataevents-enabled"}, {"from": "AU-3", "to": "cloudtrail-s3-dataevents-enabled"}, {"from": "AC-2(j)", "to": "emr-kerberos-enabled"}, {"from": "AC-3", "to": "emr-kerberos-enabled"}, {"from": "AC-5c", "to": "emr-kerberos-enabled"}, {"from": "AC-6", "to": "emr-kerberos-enabled"}, {"from": "AC-2(j)", "to": "iam-group-has-users-check"}, {"from": "AC-3", "to": "iam-group-has-users-check"}, {"from": "AC-5c", "to": "iam-group-has-users-check"}, {"from": "AC-6", "to": "iam-group-has-users-check"}, {"from": "SC-2", "to": "iam-group-has-users-check"}, {"from": "AC-3", "to": "s3-bucket-policy-grantee-check"}, {"from": "AC-6", "to": "s3-bucket-policy-grantee-check"}, {"from": "SC-7", "to": "s3-bucket-policy-grantee-check"}, {"from": "SC-7(3)", "to": "s3-bucket-policy-grantee-check"}, {"from": "AC-4", "to": "lambda-inside-vpc"}, {"from": "SC-7", "to": "lambda-inside-vpc"}, {"from": "SC-7(3)", "to": "lambda-inside-vpc"}, {"from": "AC-4", "to": "ec2-instances-in-vpc"}, {"from": "SC-7", "to": "ec2-instances-in-vpc"}, {"from": "SC-7(3)", "to": "ec2-instances-in-vpc"}, {"from": "AC-4", "to": "vpc-sg-open-only-to-authorized-ports"}, {"from": "SC-7", "to": "vpc-sg-open-only-to-authorized-ports"}, {"from": "SC-7(3)", "to": "vpc-sg-open-only-to-authorized-ports"}, {"from": "AC-21(b)", "to": "ec2-instance-no-public-ip"}, {"from": "AC-4", "to": "ec2-instance-no-public-ip"}, {"from": "AC-6", "to": "ec2-instance-no-public-ip"}, {"from": "SC-7", "to": "ec2-instance-no-public-ip"}, {"from": "SC-7(3)", "to": "ec2-instance-no-public-ip"}, {"from": "AC-4", "to": "elasticsearch-in-vpc-only"}, {"from": "SC-7", "to": "elasticsearch-in-vpc-only"}, {"from": "SC-7(3)", "to": "elasticsearch-in-vpc-only"}, {"from": "AC-17(3)", "to": "internet-gateway-authorized-vpc-only"}, {"from": "AC-6", "to": "iam-no-inline-policy-check"}, {"from": "AC-17(2)", "to": "elb-acm-certificate-required"}, {"from": "SC-13", "to": "elb-acm-certificate-required"}, {"from": "SC-7", "to": "elb-acm-certificate-required"}, {"from": "SC-8", "to": "elb-acm-certificate-required"}, {"from": "SC-8(1)", "to": "elb-acm-certificate-required"}, {"from": "AC-17(2)", "to": "alb-http-drop-invalid-header-enabled"}, {"from": "SC-23", "to": "alb-http-drop-invalid-header-enabled"}, {"from": "SC-7", "to": "alb-http-drop-invalid-header-enabled"}, {"from": "SC-8", "to": "alb-http-drop-invalid-header-enabled"}, {"from": "SC-8(1)", "to": "alb-http-drop-invalid-header-enabled"}, {"from": "AC-17(2)", "to": "elb-tls-https-listeners-only"}, {"from": "SC-23", "to": "elb-tls-https-listeners-only"}, {"from": "SC-7", "to": "elb-tls-https-listeners-only"}, {"from": "SC-8", "to": "elb-tls-https-listeners-only"}, {"from": "SC-8(1)", "to": "elb-tls-https-listeners-only"}, {"from": "AU-12(a)(c)", "to": "api-gw-execution-logging-enabled"}, {"from": "AU-2(a)(d)", "to": "api-gw-execution-logging-enabled"}, {"from": "AU-3", "to": "api-gw-execution-logging-enabled"}, {"from": "AU-9", "to": "cloudwatch-log-group-encrypted"}, {"from": "SC-13", "to": "cloudwatch-log-group-encrypted"}, {"from": "SC-28", "to": "cloudwatch-log-group-encrypted"}, {"from": "AU-9(2)", "to": "s3-bucket-replication-enabled"}, {"from": "CP-10", "to": "s3-bucket-replication-enabled"}, {"from": "CP-9(b)", "to": "s3-bucket-replication-enabled"}, {"from": "SC-36", "to": "s3-bucket-replication-enabled"}, {"from": "SC-5", "to": "s3-bucket-replication-enabled"}, {"from": "AU-11", "to": "cw-loggroup-retention-period-check"}, {"from": "SI-12", "to": "cw-loggroup-retention-period-check"}, {"from": "CA-7(a)(b)", "to": "ec2-instance-detailed-monitoring-enabled"}, {"from": "SI-4(2)", "to": "ec2-instance-detailed-monitoring-enabled"}, {"from": "SI-4(a)(b)(c", "to": "ec2-instance-detailed-monitoring-enabled"}, {"from": "CM-2", "to": "ec2-volume-inuse-check"}, {"from": "SC-4", "to": "ec2-volume-inuse-check"}, {"from": "CM-2", "to": "elb-deletion-protection-enabled"}, {"from": "CP-10", "to": "elb-deletion-protection-enabled"}, {"from": "CM-2", "to": "cloudtrail-security-trail-enabled"}, {"from": "CP-10", "to": "elasticache-redis-cluster-automatic-backup-check"}, {"from": "CP-9(b)", "to": "elasticache-redis-cluster-automatic-backup-check"}, {"from": "SI-12", "to": "elasticache-redis-cluster-automatic-backup-check"}, {"from": "CP-10", "to": "s3-bucket-versioning-enabled"}, {"from": "SI-12", "to": "s3-bucket-versioning-enabled"}, {"from": "CP-10", "to": "vpc-vpn-2-tunnels-up"}, {"from": "CP-10", "to": "elb-cross-zone-load-balancing-enabled"}, {"from": "SC-5", "to": "elb-cross-zone-load-balancing-enabled"}, {"from": "IA-2(1)(2)(11)", "to": "iam-user-mfa-enabled"}, {"from": "IR-4(1)", "to": "guardduty-non-archived-findings"}, {"from": "IR-6(1)", "to": "guardduty-non-archived-findings"}, {"from": "IR-7(1)", "to": "guardduty-non-archived-findings"}, {"from": "RA-5", "to": "guardduty-non-archived-findings"}, {"from": "SA-10", "to": "guardduty-non-archived-findings"}, {"from": "SI-4(a)(b)(c)", "to": "guardduty-non-archived-findings"}, {"from": "SC-7", "to": "elasticsearch-node-to-node-encryption-check"}, {"from": "SC-8", "to": "elasticsearch-node-to-node-encryption-check"}, {"from": "SC-8(1)", "to": "elasticsearch-node-to-node-encryption-check"}, {"from": "SC-12", "to": "kms-cmk-not-scheduled-for-deletion"}, {"from": "SC-28", "to": "kms-cmk-not-scheduled-for-deletion"}, {"from": "SC-13", "to": "api-gw-cache-enabled-and-encrypted"}, {"from": "SC-28", "to": "api-gw-cache-enabled-and-encrypted"}, {"from": "SC-13", "to": "sagemaker-endpoint-configuration-kms-key-configured"}, {"from": "SC-28", "to": "sagemaker-endpoint-configuration-kms-key-configured"}, {"from": "SC-13", "to": "sagemaker-notebook-instance-kms-key-configured"}, {"from": "SC-28", "to": "sagemaker-notebook-instance-kms-key-configured"}, {"from": "SC-13", "to": "dynamodb-table-encrypted-kms"}, {"from": "SC-28", "to": "s3-bucket-default-lock-enabled"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
